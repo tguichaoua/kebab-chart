@@ -1,25 +1,6 @@
-# Kebab Chart
+#import "../src/lib.typ": kebab-chart
 
-Kebab chart is a typst package to display time range chart.
-
-## Examples
-
-Checkout the [repository](https://github.com/tguichaoua/kebab-chart/tree/main/examples) for the source code of the following examples:
-
-### A simple chart
-
-![simple kebab chart](./gallery/simple.png)
-
-### Product development cycles
-
-![development cycle example](./gallery/development_cycles.png)
-
-## Usage
-
-Here a simple usage:
-
-```typst
-#import "@preview/kebab-chart:0.1.0": kebab-chart
+#set page(width: auto, height: auto, margin: 0.5cm)
 
 #kebab-chart(
   ticks: 5,
@@ -39,4 +20,3 @@ Here a simple usage:
     ),
   ),
 )
-```
