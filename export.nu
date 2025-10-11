@@ -5,6 +5,7 @@ def "main dist" [] {
 
     cp typst.toml $dist
     cp LICENSE $dist
+    cp README.md $dist
     cp -r src $dist
     cp -r gallery $dist
 }
