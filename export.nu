@@ -1,21 +1,22 @@
 def "main dist" [] {
     let version = open typst.toml | get package.version
     let dist = $'./dist/($version)'
+    let gallery = $dist | path join gallery
+
     mkdir $dist
+    mkdir $gallery
 
     cp typst.toml $dist
     cp LICENSE $dist
     cp README.md $dist
     cp -r src $dist
-    cp -r gallery $dist
+    cp gallery/*.png $gallery
 }
 
-def "main examples" [] {
-    ls -s examples 
-    | get name 
-    | each { 
-        |it| ^typst compile --root . --format png ./examples/($it) ./gallery/($it | path parse | upsert extension png | path join)
-    } 
+def "main gallery" [] {
+    ls gallery/*.typ
+    | get name
+    | each { |it| ^typst compile --root . --format png $it }
     | ignore
 }
 

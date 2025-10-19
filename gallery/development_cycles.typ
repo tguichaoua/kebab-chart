@@ -69,13 +69,13 @@
   width: WIDTH,
 
   ticks: dates => {
-    let start = dates.visible_start
-    let end = dates.visible_end
+    let start = dates.visible-start
+    let end = dates.visible-end
 
     let ticks = ()
 
     // Add a tick at the begin of each 2 weeks cycles
-    let i = dates.data_start
+    let i = dates.data-start
     while i < end {
       ticks.push(i)
       i += duration(days: 14)
@@ -92,8 +92,8 @@
   },
 
   bookmarks: dates => {
-    let start = dates.visible_start
-    let end = dates.visible_end
+    let start = dates.visible-start
+    let end = dates.visible-end
 
     let marks = ()
 
@@ -120,7 +120,7 @@
 
 
     // Select the next monday from start
-    start = dates.data_start
+    start = dates.data-start
     let i = if start.weekday() == 1 {
       start
     } else {
