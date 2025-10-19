@@ -24,7 +24,7 @@ Checkout the [repository](https://github.com/tguichaoua/kebab-chart/tree/main/ga
 Here a simple usage:
 
 ```typst
-#import "@preview/kebab-chart:0.1.0": kebab-chart
+#import "@preview/kebab-chart:0.2.0": kebab-chart
 
 #kebab-chart(
   ticks: 5,
