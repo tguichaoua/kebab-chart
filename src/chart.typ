@@ -202,6 +202,10 @@
         panic("invalid tick")
       }
 
+      if not is_date_visible(dt) {
+        continue
+      }
+
       let x = dt_to_x(dt)
 
       move-to((x, 0))
