@@ -17,15 +17,15 @@
   cetz.canvas({
     import cetz.draw: *
 
-    let LABEL_PADDING = 0.2cm
+    let LABEL-PADDING = 0.2cm
 
     /* -------------------------------------------------------------------------- */
     assert(type(data) == array, message: "'data' is expected to be an array")
     /* -------------------------------------------------------------------------- */
-    let VALID_LABEL_SIDE = (none, "both", "right", "left")
+    let VALID-LABEL-SIDE = (none, "both", "right", "left")
     assert(
-      VALID_LABEL_SIDE.contains(label-side),
-      message: "'label_side' is expected to be one of " + repr(VALID_LABEL_SIDE),
+      VALID-LABEL-SIDE.contains(label-side),
+      message: "'label-side' is expected to be one of " + repr(VALID-LABEL-SIDE),
     )
     /* -------------------------------------------------------------------------- */
     let weekdays = weekdays
@@ -38,53 +38,53 @@
     )
     /* -------------------------------------------------------------------------- */
 
-    let data_start_dt = start-date
-    let data_end_dt = end-date
+    let data-start-dt = start-date
+    let data-end-dt = end-date
 
-    if data_start_dt == auto {
-      let min_date = datetime(year: 5000, month: 12, day: 31)
+    if data-start-dt == auto {
+      let min-date = datetime(year: 5000, month: 12, day: 31)
       for entry in data {
         for span in entry.spans {
-          if span.start < min_date {
-            min_date = span.start
+          if span.start < min-date {
+            min-date = span.start
           }
         }
       }
 
-      data_start_dt = min_date
+      data-start-dt = min-date
     }
 
-    if data_end_dt == auto {
-      let max_date = datetime(year: 1900, month: 1, day: 1)
+    if data-end-dt == auto {
+      let max-date = datetime(year: 1900, month: 1, day: 1)
       for entry in data {
         for span in entry.spans {
-          if span.end > max_date {
-            max_date = span.end
+          if span.end > max-date {
+            max-date = span.end
           }
         }
       }
 
-      data_end_dt = max_date
+      data-end-dt = max-date
     }
 
-    assert(type(data_start_dt) == datetime, message: "'start_date' is expected to be a datetime")
-    assert(type(data_end_dt) == datetime, message: "'end_date' is expected to be a datetime")
+    assert(type(data-start-dt) == datetime, message: "'start-date' is expected to be a datetime")
+    assert(type(data-end-dt) == datetime, message: "'end-date' is expected to be a datetime")
 
-    let visible_start_dt = data_start_dt - date-padding
-    let visible_end_dt = data_end_dt + date-padding
+    let visible-start-dt = data-start-dt - date-padding
+    let visible-end-dt = data-end-dt + date-padding
 
     let DATES = (
-      visible_start: visible_start_dt,
-      visible_end: visible_end_dt,
-      data_start: data_start_dt,
-      data_end: data_end_dt,
+      visible-start: visible-start-dt,
+      visible-end: visible-end-dt,
+      data-start: data-start-dt,
+      data-end: data-end-dt,
     )
 
     /* -------------------------------------------------------------------------- */
     let ticks = ticks
     if type(ticks) == int {
-      let tick_duration = (data_end_dt - data_start_dt) / (ticks - 1)
-      ticks = range(0, ticks).map(i => data_start_dt + i * tick_duration)
+      let tick-duration = (data-end-dt - data-start-dt) / (ticks - 1)
+      ticks = range(0, ticks).map(i => data-start-dt + i * tick-duration)
     } else if type(ticks) == function {
       ticks = ticks(DATES)
     }
@@ -97,37 +97,37 @@
     assert(type(bookmarks) == array)
     /* -------------------------------------------------------------------------- */
 
-    let labels_width = 0pt
+    let labels-width = 0pt
     if label-side != none {
       for e in data {
         if "label" in e {
           let (width,) = measure(e.label)
-          if width > labels_width {
-            labels_width = width
+          if width > labels-width {
+            labels-width = width
           }
         }
       }
     }
-    labels_width += LABEL_PADDING
+    labels-width += LABEL-PADDING
     if label-side == "both" {
-      labels_width *= 2
+      labels-width *= 2
     }
 
     /* -------------------------------------------------------------------------- */
 
-    let UNIT_PER_DAYS = (width - labels_width) / (visible_end_dt - visible_start_dt).days()
+    let UNIT-PER-DAYS = (width - labels-width) / (visible-end-dt - visible-start-dt).days()
 
-    let dt_to_x(dt, start: visible_start_dt) = (dt - start).days() * UNIT_PER_DAYS
+    let dt-to-x(dt, start: visible-start-dt) = (dt - start).days() * UNIT-PER-DAYS
 
-    let is_date_visible(dt) = dt >= visible_start_dt and dt <= visible_end_dt
+    let is-date-visible(dt) = dt >= visible-start-dt and dt <= visible-end-dt
 
     let bar(start, end, y, ..params) = {
-      let a = dt_to_x(start)
-      let b = dt_to_x(end, start: start)
+      let a = dt-to-x(start)
+      let b = dt-to-x(end, start: start)
       rect((a, y), (rel: (b, span-height)), anchor: "north", ..params)
     }
 
-    let RIGHT = dt_to_x(visible_end_dt)
+    let RIGHT = dt-to-x(visible-end-dt)
 
     /* -------------------------------------------------------------------------- */
 
@@ -142,7 +142,7 @@
           content(
             (0, y),
             anchor: "east",
-            padding: (right: LABEL_PADDING),
+            padding: (right: LABEL-PADDING),
             entry.label,
           )
         }
@@ -150,7 +150,7 @@
           content(
             (RIGHT, y),
             anchor: "west",
-            padding: (left: LABEL_PADDING),
+            padding: (left: LABEL-PADDING),
             entry.label,
           )
         }
@@ -187,26 +187,26 @@
 
     for tick in ticks {
       let dt
-      let content_
+      let tick-content
       let color
 
       if type(tick) == datetime {
         dt = tick
-        content_ = dt.display(date-format)
+        tick-content = dt.display(date-format)
         color = auto
       } else if type(tick) == dictionary {
         dt = tick.at("date")
-        content_ = tick.at("content")
+        tick-content = tick.at("content")
         color = tick.at("color", default: auto)
       } else {
         panic("invalid tick")
       }
 
-      if not is_date_visible(dt) {
+      if not is-date-visible(dt) {
         continue
       }
 
-      let x = dt_to_x(dt)
+      let x = dt-to-x(dt)
 
       move-to((x, 0))
       line(
@@ -214,20 +214,21 @@
         (rel: (0, 0.4)),
         stroke: (paint: color),
       )
-      content((x, 0), anchor: "north", padding: (top: 0.4cm), content_)
+      content((x, 0), anchor: "north", padding: (top: 0.4cm), tick-content)
     }
 
     /* -------------------------------------------------------------------------- */
 
     // Display the bookmarks
     for mark in bookmarks {
+      // assert the bookmark is visible
       if type(mark.date) == datetime {
-        if not is_date_visible(mark.date) {
+        if not is-date-visible(mark.date) {
           continue
         }
       } else {
         let (start, end) = mark.date
-        if end <= visible_start_dt or start >= visible_end_dt {
+        if end <= visible-start-dt or start >= visible-end-dt {
           continue
         }
       }
@@ -237,7 +238,7 @@
 
       on-layer(layer, {
         if type(mark.date) == datetime {
-          let x = dt_to_x(mark.date)
+          let x = dt-to-x(mark.date)
           line((x, 0), (x, TOP), stroke: mark.at("stroke", default: auto))
           if "content" in mark {
             content(
@@ -249,15 +250,15 @@
           }
         } else {
           let (start, end) = mark.date
-          if start < visible_start_dt {
-            start = visible_start_dt
+          if start < visible-start-dt {
+            start = visible-start-dt
           }
-          if end > visible_end_dt {
-            end = visible_end_dt
+          if end > visible-end-dt {
+            end = visible-end-dt
           }
 
-          let start = dt_to_x(start)
-          let end = dt_to_x(end)
+          let start = dt-to-x(start)
+          let end = dt-to-x(end)
           rect(
             (start, 0),
             (end, TOP),
@@ -271,11 +272,11 @@
     /* -------------------------------------------------------------------------- */
 
     if weekdays != none {
-      let i = visible_start_dt
+      let i = visible-start-dt
 
-      while i < visible_end_dt {
-        let a = dt_to_x(i)
-        let b = dt_to_x(i + duration(days: 1))
+      while i < visible-end-dt {
+        let a = dt-to-x(i)
+        let b = dt-to-x(i + duration(days: 1))
 
         rect(
           (a, TOP),
