@@ -13,6 +13,10 @@ def "main dist" [] {
     cp gallery/*.png $gallery
 }
 
+def "main manual" [] {
+    ^typst compile --root . ./docs/manual.typ
+}
+
 def "main gallery" [] {
     ls gallery/*.typ
     | get name
