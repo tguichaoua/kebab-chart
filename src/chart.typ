@@ -1,17 +1,88 @@
 #import "@preview/cetz:0.4.2"
 
+/// A time range chart with multiple lines and spans per line.
+///
+/// `ticks` and `bookmarks` may accept a function that received a dictionary with the following values:
+/// - `visible-start`: The datetime of the left-most horizontal position
+/// - `visible-end`: The datetime of the right-most horizontal position
+/// - `data-start`: The earliest datetime of the entries from `data`
+/// - `data-end`: The latest datetime of the entries from `data`
+///
 #let kebab-chart(
+  /// Ticks on the x-axis.
+  ///
+  /// Can be one of:
+  /// - a number of ticks
+  /// - a list of ticks
+  /// - a function that returns a list of ticks.
+  ///
+  /// A tick can be either a datetime or a dictionary with the following values:
+  /// - `date`: The position of tick on the x-axis
+  /// - `content`: The content used displayed under the tick
+  /// - `color`: Override the color used to display the tick
+  /// -> int | array | func
   ticks: 10,
+  /// The format used to display tick datetime.
+  ///
+  /// -> str
   date-format: "[day] [month repr:short]",
+  /// The earliest date to show.
+  ///
+  /// If set to `auto`, use the earliest datetime from `data`.
+  /// -> datetime | auto
   start-date: auto,
+  /// The latest date to show.
+  ///
+  /// If set to `auto`, use the latest datetime from `data`.
+  /// -> datetime | auto
   end-date: auto,
+  /// A padding applied to `start-date` and `end-date` to determines the visible range of dates.
+  ///
+  /// -> duration
   date-padding: duration(weeks: 1),
+  /// The width the canvas will occupied.
+  /// -> length
   width: 10cm,
+  /// The height of the spans
+  /// -> length
   span-height: 0.3cm,
+  /// Spaces between each "kebab" lines.
+  /// -> length
   vertical-padding: 0.6,
+  /// A list or a function that returns a list of bookmarks.
+  ///
+  /// A bookmark is a dictionary with the following values:
+  /// - `date`: a datetime or an array of two datetimes.
+  /// - `position`: Either `"above"` or `"below"` (default to `"above"`), the layer on which the bookmark is rendered.
+  /// - `stroke`: The stroke used to render the bookmark.
+  /// - `fill`: The fill used to render the bookmark.
+  /// - `content`: Facultative content rendered above the bookmark.
+  ///
+  /// -> array | func
   bookmarks: (),
+  /// Which sides on which render the data's labels.
+  ///
+  /// -> "left" | "right" | "both" | none
   label-side: "both",
+  /// If not `none`, shows the weekday above the charts.
+  ///
+  /// Expect to be an array with 7 items (one for each weekdays).
+  ///
+  /// -> none | auto | array
   weekdays: none,
+  /// The data used to defined each "kebab" and each time span.
+  ///
+  /// An array of dictionary with the following properties:
+  /// - `label`: a label displayed on the side.
+  /// - `spans`: a list of time spans.
+  ///
+  /// Span is a dictionary with the following properties:
+  /// - `start`: a datetime that defined the start of the span.
+  /// - `end`: a datetime that defined the end of the span.
+  /// - `stroke`: the stoke used to render the span.
+  /// - `fill`: the fill used to render the span.
+  ///
+  /// -> array
   data,
 ) = context {
   cetz.canvas({

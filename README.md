@@ -1,5 +1,10 @@
 # Kebab Chart
 
+[![Typst Universe](https://img.shields.io/badge/Typst-Universe-239dad)](https://typst.app/universe/package/kebab-chart/)
+[![Repo](https://img.shields.io/badge/GitHub-repo-444)](https://github.com/tguichaoua/kebab-chart)
+[![Development version](https://img.shields.io/badge/dynamic/toml?url=https%3A%2F%2Fgithub.com%2Ftguichaoua%2Fkebab-chart%2Fraw%2Fmain%2Ftypst.toml&query=package.version&label=main&color=444)](https://github.com/tguichaoua/kebab-chart/tree/main)
+[![Manual](https://img.shields.io/badge/docs-manual.pdf-orange)](docs/manual.pdf?raw=true)
+
 Kebab chart is a typst package to display time range chart.
 
 ## Examples
