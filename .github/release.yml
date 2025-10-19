@@ -1,0 +1,18 @@
+changelog:
+  exclude:
+    labels:
+      - meta
+      - release
+  categories:
+    - title: 💥 Breaking Changes
+      labels:
+        - breaking change
+    - title: ✨ New Features
+      labels:
+        - enhancement
+    - title: 🐛 Fixes
+      labels:
+        - bug
+    - title: Other Changes
+      labels:
+        - '*'
